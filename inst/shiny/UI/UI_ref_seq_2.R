@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyjs)
 library(taxize)
 
 # Define UI for app that draws a histogram ----
@@ -38,7 +39,7 @@ ui <- fluidPage(
       type = "tabs",
       
       tabPanel("Kingdom",
-               checkboxGroupInput("kingdomGroup", label = "Choose a kingdom:", 
+               radioButtons("kingdomGroup", label = "Choose a kingdom:", 
                                   choices = kingdom_list),
                actionButton("kingdom_update","Update")
       ),
@@ -137,6 +138,7 @@ server <- function(input, output, session) {
     
     for(p in p_input){
       children_list <- NULL
+      Sys.sleep(1)
       children_list <- children(p, db = 'ncbi')
       if(!is.null(children_list)){
         children_list <- children_list[[1]]
@@ -203,6 +205,7 @@ server <- function(input, output, session) {
     
     for(o in o_input){
       children_list <- NULL
+      delay
       children_list <- children(o, db = 'ncbi')
       if(!is.null(children_list)){
         children_list <- children_list[[1]]
